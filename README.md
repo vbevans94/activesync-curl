@@ -27,3 +27,8 @@ Suppose you have Mac. In case you have Ubuntu please fix accordingly, you would 
  
 
     ./ascurl.py send
+
+# Known issues:
+It' s probably [libwbxml](https://github.com/libwbxml/libwbxml) issue, it somehow misbehaves, when there are repeating text in xml. Basically, it skips some parts of it when there is repeating words. So, you may face issues when subject, mail body and recipient will contain the same word. Beware!
+
+P.S. Maybe authors wanted to enforce diversity of language:)
