@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE ActiveSync PUBLIC "-//MICROSOFT//DTD ActiveSync//EN" "http://www.microsoft.com/">
+<Provision xmlns="Provision:">
+<DeviceInformation xmlns="Settings:">
+<Set>
+<Model>Android</Model>
+<OS>Android 8.1.0</OS>
+<UserAgent>Android/Android</UserAgent>
+</Set>
+</DeviceInformation>
+<Policies>
+<Policy>
+<PolicyType>MS-EAS-Provisioning-WBXML</PolicyType>
+</Policy>
+</Policies>
+</Provision>

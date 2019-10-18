@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<!DOCTYPE ActiveSync PUBLIC "-//MICROSOFT//DTD ActiveSync//EN" "http://www.microsoft.com/">
+<SendMail xmlns="ComposeMail:">
+<ClientId>$client_id$</ClientId>
+<SaveInSentItems/>
+<MIME>$mime$</MIME>
+</SendMail>
