@@ -6,6 +6,7 @@ import sys
 import configparser
 import base64
 import uuid
+import shutil
 from shutil import copyfile
 
 POLICY_KEY_FILE = "policykey.txt"
@@ -22,7 +23,10 @@ device_id = config["User"]["device_id"]
 # prepare for execution
 def create_build():
 	try:
-		os.mkdir("build")
+		dir = 'build'
+		if os.path.exists(dir):
+			shutil.rmtree(dir)
+		os.makedirs(dir)
 	except FileExistsError as e:
 		pass
 
@@ -31,7 +35,7 @@ create_build()
 def set_policy_key_from_file(file):
 	tree = parse(file).getroot()
 
-	found = '0'
+	policy_key = '0'
 
 	for child in tree:
 		found = get_policy_key_from_node(child)
@@ -68,18 +72,16 @@ def get_base64_mime():
 		data = file.read()
 		return str(base64.b64encode(data.encode("utf-8")), "utf-8")
 
-def read_command(command, params = {}):
+def read_command(command):
 	policy_key = get_policy_key()
-	with open(command, 'r') as file:
+	with open('templates/command.sh', 'r') as file:
 		data = file.read().replace('$user$', user)
 		data = data.replace('$password$', password)
 		data = data.replace('$host$', host)
 		data = data.replace('$device_id$', device_id)
 		data = data.replace('$policy_key$', policy_key)
-		for k, v in params.items():
-			data = data.replace(k, v)
+		data = data.replace('$command$', command)
 
-		print(data)
 		return data
 
 def prepare_request(from_file, to_file, params = {}):
@@ -92,20 +94,22 @@ def prepare_request(from_file, to_file, params = {}):
 		to.close()
 
 def provision():
+	set_policy_key('0')
+
 	# get policy
 	copyfile('templates/provision-1.xml', 'build/Provision.xml')
-	os.system(read_command('templates/command.sh', {'$command$': 'Provision'}))
+	os.system(read_command('Provision'))
 	set_policy_key_from_file('build/resp.xml')
 
 	# acknowledge
 	prepare_request('templates/provision-2.xml', 'build/Provision.xml', {'$policy_key$': get_policy_key()})
-	os.system(read_command('templates/command.sh', {'$command$': 'Provision'}))
+	os.system(read_command('Provision'))
 	set_policy_key_from_file('build/resp.xml')
 
 def send():
 	mime = get_base64_mime()
 	prepare_request('templates/sendmail.xml', 'build/SendMail.xml', {'$mime$': mime, '$client_id$': str(uuid.uuid4())})
-	os.system(read_command('templates/command.sh', {'$command$': 'SendMail'}))
+	os.system(read_command('SendMail'))
 
 
 if len(sys.argv) > 1:

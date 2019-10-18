@@ -3,9 +3,9 @@
 <Provision xmlns="Provision:">
 <DeviceInformation xmlns="Settings:">
 <Set>
-<Model>Android</Model>
+<Model>Samsung</Model>
 <OS>Android 8.1.0</OS>
-<UserAgent>Android/Android</UserAgent>
+<UserAgent>Samsung/Android-8.1.0</UserAgent>
 </Set>
 </DeviceInformation>
 <Policies>

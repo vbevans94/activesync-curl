@@ -1,8 +1,8 @@
-Subject: From asap
-To: test@example.com
+Subject: Test
+To: email@example.com
 MIME-Version: 1.0
 Importance: Normal
 X-Priority: 3
 Content-Type: text/plain
 
-Hello world from asap!
+Hello world from ActiveSync-curl!
